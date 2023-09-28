@@ -5,13 +5,13 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>fyndstyle</title>
+  <title>My project (1)</title>
   <link rel="shortcut icon" href="TemplateData/favicon.ico">
   <link rel="stylesheet" href="TemplateData/style.css">
 </head>
 
 <body class="dark">
-  <!-- <div id="unity-container" class="unity-desktop">
+  <div id="unity-container" class="unity-desktop">
     <canvas id="unity-canvas"></canvas>
   </div>
   <div id="loading-cover" style="display:none;">
@@ -22,41 +22,31 @@
       </div>
       <div class="spinner"></div>
     </div>
-  </div> -->
-  <div id="unity-container" class="unity-desktop">
-    <canvas id="unity-canvas"></canvas>
-  </div>
-  <div id="loading-cover" style="display:none;">
-    <div id="unity-logo"><img src="logo.png"></div>
-    <div id="unity-loading-text">
-      Loading...
-      <span id="loading-percentage">0%</span>
-    </div>
-    <!-- <div class="spinner"></div> -->
   </div>
   <div id="unity-fullscreen-button" style="display: none;"></div>
+  <iframe src="https://fyndstyle.glamarz0.de/" frameborder="0" style="width:100%; height: 100vh; position: absolute;
+    top: 0; left: 0; z-index: 1000;"></iframe>
   <script>
-    const hideFullScreenButton = "true";
+    const hideFullScreenButton = "";
     const buildUrl = "Build";
-    const loaderUrl = buildUrl + "/cxrwebbuild.loader.js";
+    const loaderUrl = buildUrl + "/alsj.loader.js";
     const config = {
-      dataUrl: buildUrl + "/cxrwebbuild.data.unityweb",
-      frameworkUrl: buildUrl + "/cxrwebbuild.framework.js.unityweb",
-      codeUrl: buildUrl + "/cxrwebbuild.wasm.unityweb",
-      streamingAssetsUrl: "StreamingAssets",
-      companyName: "Shopesense Retail Pvt. Ltd.",
-      productName: "fyndstyle",
+      dataUrl: buildUrl + "/alsj.data.gz",
+      frameworkUrl: buildUrl + "/alsj.framework.js.gz",
+      codeUrl: buildUrl + "/alsj.wasm.gz",
+        streamingAssetsUrl: "StreamingAssets",
+      companyName: "DefaultCompany",
+      productName: "My project (1)",
       productVersion: "0.1",
     };
 
     const container = document.querySelector("#unity-container");
     const canvas = document.querySelector("#unity-canvas");
     const loadingCover = document.querySelector("#loading-cover");
-    // const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
-    // const progressBarFull = document.querySelector("#unity-progress-bar-full");
-    const progressText = document.querySelector("#loading-percentage");
+    const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
+    const progressBarFull = document.querySelector("#unity-progress-bar-full");
     const fullscreenButton = document.querySelector("#unity-fullscreen-button");
-    // const spinner = document.querySelector('.spinner');
+    const spinner = document.querySelector('.spinner');
 
     const canFullscreen = (function () {
       for (const key of [
@@ -83,12 +73,10 @@
     script.src = loaderUrl;
     script.onload = () => {
       createUnityInstance(canvas, config, (progress) => {
-        // spinner.style.display = "none";
-        // progressBarEmpty.style.display = "";
-        //progressBarFull.style.width = `${100 * progress}%`;
-        progressText.textContent = `${Math.floor(progress * 100)}%`;
+        spinner.style.display = "none";
+        progressBarEmpty.style.display = "";
+        progressBarFull.style.width = `${100 * progress}%`;
       }).then((unityInstance) => {
-        _unityInstance = unityInstance;
         loadingCover.style.display = "none";
         if (canFullscreen) {
           if (!hideFullScreenButton) {
@@ -103,40 +91,7 @@
       });
     };
     document.body.appendChild(script);
-    let _unityInstance = null;
-
-    function setAPIDataFromClient(data) {
-      let _data = JSON.stringify(data);
-      _unityInstance.SendMessage("ClientDataHandler", "SetAPIData", _data);
-    }
-
-    function updateAPIDataFromClient(data) {
-      let _data = JSON.stringify(data);
-      _unityInstance.SendMessage("ClientDataHandler", "UpdateAPIData", _data);
-    }
-
-    function updateLoadingMessage() {
-      progressText.textContent = "Done!"
-    }
-
-    function clearLoadingScreen() {
-      // unityBackground.style.display = "none";
-      // unityLoadingContainer.style.display = "none";
-    }
-
-    function handleClientEvent(eventname, data) {
-      switch (eventname) {
-        case "setAPIDataFromClient":
-          setAPIDataFromClient(data);
-          break;
-        case "updateAPIDataFromClient":
-          spdateAPIDataFromClient(data);
-          break;
-      }
-    }
-
   </script>
-  <iframe src="https://fyndstyle.glamarz0.de" width=“500” height=“500“></iframe>
 </body>
 
 </html>
